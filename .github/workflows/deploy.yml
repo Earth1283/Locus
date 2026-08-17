@@ -1,0 +1,58 @@
+# Builds the web app and publishes it to GitHub Pages at
+# https://<owner>.github.io/<repo>/ — the base path is derived from the
+# actual repository name, so a rename doesn't require touching this file.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one deploy in flight at a time; a newer push wins over one still running.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # The engine is the part with actual test coverage — a broken build
+      # doesn't get to become a broken deployment.
+      - run: npm run typecheck
+      - run: npm run test --workspace=packages/engine
+
+      - name: Build web app
+        run: npm run build --workspace=packages/web
+        env:
+          DEPLOY_BASE: /${{ github.event.repository.name }}/
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: packages/web/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
