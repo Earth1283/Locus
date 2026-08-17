@@ -45,9 +45,7 @@ Live demo
 
 Every push to ``main`` builds and deploys automatically via
 ``.github/workflows/deploy.yml`` — no server-side component, so "deploy" is
-just "publish the static files somewhere." Once GitHub Pages is switched on
-for this repository (Settings → Pages → Source → **GitHub Actions**, a
-one-time click nobody has automated yet), it lives at:
+just "publish the static files somewhere."
 
    https://earth1283.github.io/Locus/
 
