@@ -54,6 +54,28 @@ export function registerLocusLanguage(monaco: typeof Monaco): void {
       "editor.lineHighlightBackground": "#00000000",
       "editorCursor.foreground": "#2c6e8e",
       "editorGutter.background": "#f7f5f0",
+      // Every floating widget (suggest, hover, code actions, find — all
+      // dormant until editor.all.js was wired in) otherwise renders in
+      // Monaco's default VS Code blue/white, which clashes hard with the
+      // paper palette.
+      "editorWidget.background": "#fcfbf8",
+      "editorWidget.foreground": "#1c1b19",
+      "editorWidget.border": "#d8d3c5",
+      "editorSuggestWidget.background": "#fcfbf8",
+      "editorSuggestWidget.border": "#d8d3c5",
+      "editorSuggestWidget.foreground": "#1c1b19",
+      "editorSuggestWidget.selectedBackground": "#2c6e8e33",
+      "editorSuggestWidget.selectedForeground": "#1c1b19",
+      "editorSuggestWidget.highlightForeground": "#2c6e8e",
+      "editorSuggestWidget.focusHighlightForeground": "#2c6e8e",
+      "editorHoverWidget.background": "#fcfbf8",
+      "editorHoverWidget.border": "#d8d3c5",
+      "list.hoverBackground": "#2c6e8e1f",
+      "list.activeSelectionBackground": "#2c6e8e33",
+      "list.activeSelectionForeground": "#1c1b19",
+      "list.inactiveSelectionBackground": "#2c6e8e1f",
+      "editorBracketMatch.background": "#2c6e8e1f",
+      "editorBracketMatch.border": "#2c6e8e55",
     },
   });
 
@@ -74,6 +96,24 @@ export function registerLocusLanguage(monaco: typeof Monaco): void {
       "editor.lineHighlightBackground": "#00000000",
       "editorCursor.foreground": "#6fb8de",
       "editorGutter.background": "#14181a",
+      "editorWidget.background": "#191e20",
+      "editorWidget.foreground": "#e8e4da",
+      "editorWidget.border": "#2a2f31",
+      "editorSuggestWidget.background": "#191e20",
+      "editorSuggestWidget.border": "#2a2f31",
+      "editorSuggestWidget.foreground": "#e8e4da",
+      "editorSuggestWidget.selectedBackground": "#6fb8de26",
+      "editorSuggestWidget.selectedForeground": "#e8e4da",
+      "editorSuggestWidget.highlightForeground": "#6fb8de",
+      "editorSuggestWidget.focusHighlightForeground": "#6fb8de",
+      "editorHoverWidget.background": "#191e20",
+      "editorHoverWidget.border": "#2a2f31",
+      "list.hoverBackground": "#6fb8de1a",
+      "list.activeSelectionBackground": "#6fb8de26",
+      "list.activeSelectionForeground": "#e8e4da",
+      "list.inactiveSelectionBackground": "#6fb8de1a",
+      "editorBracketMatch.background": "#6fb8de1a",
+      "editorBracketMatch.border": "#6fb8de55",
     },
   });
 }

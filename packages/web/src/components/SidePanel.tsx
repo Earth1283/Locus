@@ -37,10 +37,24 @@ function Section({ title, action, children }: { title: string; action?: React.Re
     <section className="panel-section">
       <div className="panel-section-head">
         <h2 className="label-caps">{title}</h2>
-        {action}
       </div>
+      {action && <div className="panel-section-action">{action}</div>}
       {children}
     </section>
+  );
+}
+
+/** Lower-priority sections (self-authored, rarely touched) stay out of the
+ * way by default — collapsed, not deleted. Mirrors the ambient-vs-on-request
+ * distinction PHILOSOPHY.md already draws for features, applied to layout. */
+function CollapsibleSection({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <details className="panel-section panel-details">
+      <summary className="panel-section-head">
+        <h2 className="label-caps">{title}</h2>
+      </summary>
+      <div className="panel-details-body">{children}</div>
+    </details>
   );
 }
 
@@ -158,7 +172,7 @@ function MilestonesSection({ store }: { store: ProofStore }) {
   };
 
   return (
-    <Section title="Milestones (off by default)">
+    <CollapsibleSection title={`Milestones${store.milestones.length ? ` (${store.milestones.length})` : ""}`}>
       <p className="panel-hint">Self-authored checkpoints. Revocable any time — nothing is lost if you remove one.</p>
       <div className="milestone-add">
         <input
@@ -187,13 +201,13 @@ function MilestonesSection({ store }: { store: ProofStore }) {
           ))}
         </ul>
       )}
-    </Section>
+    </CollapsibleSection>
   );
 }
 
 function SettingsSection({ store }: { store: ProofStore }) {
   return (
-    <Section title="Settings">
+    <CollapsibleSection title="Settings">
       <label className="panel-hint" htmlFor="macro-visibility">
         Macro expansion visibility
       </label>
@@ -208,6 +222,6 @@ function SettingsSection({ store }: { store: ProofStore }) {
         <option value="collapsed">Collapsed</option>
         <option value="always">Always shown</option>
       </select>
-    </Section>
+    </CollapsibleSection>
   );
 }

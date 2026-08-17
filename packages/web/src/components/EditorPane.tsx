@@ -1,5 +1,11 @@
 import { useEffect, useRef } from "react";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+// `editor.api` alone is just the bare core — it registers no feature
+// contributions. Without this side-effect import there is no suggest
+// controller, no code-action lightbulb, no hover/find widget: the
+// completion and quick-fix providers registered below have nothing to
+// attach to and silently never fire.
+import "monaco-editor/esm/vs/editor/editor.all.js";
 import type { ProofStore } from "../state/useProofStore.js";
 import { bridge } from "../monaco/bridge.js";
 import {
@@ -50,6 +56,14 @@ export function EditorPane({ store }: { store: ProofStore }) {
       scrollBeyondLastLine: false,
       automaticLayout: true,
       quickSuggestions: { other: true, comments: false, strings: false },
+      // Real tab-completion: Tab accepts the nearest suggestion (keyword or
+      // known object from the fact graph) even before the suggest widget has
+      // been explicitly navigated. Word-based suggestions are turned off so
+      // Tab always resolves to one of our precise completions, never an
+      // arbitrary token scraped from the document.
+      tabCompletion: "on",
+      wordBasedSuggestions: "off",
+      suggestSelection: "first",
     });
     editorRef.current = editor;
 

@@ -15,6 +15,7 @@ export function App() {
 
   return (
     <div className="app-shell">
+      <div className="grain-overlay" aria-hidden="true" />
       <TopBar store={store} />
       <main className="app-main">
         <div className="pane pane-editor">
